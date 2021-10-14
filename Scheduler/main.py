@@ -35,14 +35,15 @@ def main():
             #"x\n" is for reading from txt file.
             if patientInput == "x\n" or patientInput == "x":
 
-                #for patient in patients:
+                for patient in patients:
                     #print the patients schedule
-                    #print("{0}, {1}, {2}, {3}".format(patient.slots[1], patient.locations[1], patient.slots[2], patient.locations[2]))
+                    print("{0}, {1}, {2}, {3}".format(patient.slots[1], patient.locations[1], patient.slots[2], patient.locations[2]))
 
                 #print the amount of hospitals used
                 print(len(hospitals.locations))
                 #print the schedule of the hospitals, nicely formatted
-                #hospitals.printLocations()
+                hospitals.printLocations()
+                
                 break
 
             #if the input is a patient, add a patient to the hospitals
