@@ -197,21 +197,17 @@ def scheduleWithGapCalculation(hospitals, patient, ps, gap):
         freeSlots = findFreeSlotsWithGap(hospitals.locations, patient.startIs[1], patient.endIs[1], ps[1])
 
     #select the slots such that the gap between the last filled slot and this shot is ideal, i.e. a multiple of both processing times
-    bestSlots = [(i,j) for (i,j,g) in freeSlots if g % leastCommonMult == 0]
+    slots = [(i,j) for (i,j,g) in freeSlots if g % leastCommonMult == 0]
 
     #if there are no such slots, try and find slots that are a multiple of either of the two processing times, favoreing the larger one
-    if len(bestSlots) == 0:
-        goodSlots = [(i,j) for (i,j,g) in freeSlots if g % max(ps[1],ps[2]) == 0]
-        if len(goodSlots) == 0:
-            okaySlots = [(i,j) for (i,j,g) in freeSlots if g % min(ps[1],ps[2]) == 0]
+    if len(slots) == 0:
+        slots = [(i,j) for (i,j,g) in freeSlots if g % max(ps[1],ps[2]) == 0]
+        if len(slots) == 0:
+            slots = [(i,j) for (i,j,g) in freeSlots if g % min(ps[1],ps[2]) == 0]
 
     #pick the location and slot accoriding to our preference
-    if len(bestSlots) != 0:
-        location, slot = bestSlots[0]
-    elif len(goodSlots) != 0:
-        location, slot = goodSlots[0]
-    elif len(okaySlots) != 0:
-        location, slot = okaySlots[0]
+    if len(slots) != 0:
+        location, slot = slots[0]
     else:
         location, slot, _ = freeSlots[0]
 
@@ -223,26 +219,22 @@ def scheduleWithGapCalculation(hospitals, patient, ps, gap):
     patient.endIs[2] = patient.startIs[2] + patient.lengthI2 - 1
 
 
-    #do the same for te second shot
+    #do the same for the second shot
     freeSlots = findFreeSlotsWithGap(hospitals.locations, patient.startIs[2], patient.endIs[2], ps[2])
 
     if len(freeSlots) == 0:
         hospitals.newLocation()
         freeSlots = findFreeSlotsWithGap(hospitals.locations, patient.startIs[2], patient.endIs[2], ps[2])
 
-    bestSlots = [(i,j) for (i,j,g) in freeSlots if g % leastCommonMult == 0]
+    slots = [(i,j) for (i,j,g) in freeSlots if g % leastCommonMult == 0]
 
-    if len(bestSlots) == 0:
-        goodSlots = [(i,j) for (i,j,g) in freeSlots if g % max(ps[1],ps[2]) == 0]
-        if len(goodSlots) == 0:
-            okaySlots = [(i,j) for (i,j,g) in freeSlots if g % min(ps[1],ps[2]) == 0]
+    if len(slots) == 0:
+        slots = [(i,j) for (i,j,g) in freeSlots if g % max(ps[1],ps[2]) == 0]
+        if len(slots) == 0:
+            slots = [(i,j) for (i,j,g) in freeSlots if g % min(ps[1],ps[2]) == 0]
 
-    if len(bestSlots) != 0:
-        location, slot = bestSlots[0]
-    elif len(goodSlots) != 0:
-        location, slot = goodSlots[0]
-    elif len(okaySlots) != 0:
-        location, slot = okaySlots[0]
+    if len(slots) != 0:
+        location, slot = slots[0]
     else:
         location, slot, _ = freeSlots[0]
 
