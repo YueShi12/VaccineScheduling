@@ -41,8 +41,8 @@ def main():
 
                 #print the amount of hospitals used
                 print(len(hospitals.locations))
-                #print the schedule of the hospitals, nicely formatted
-                hospitals.printLocations()
+                #the function below prints the schedule of the hospitals, nicely formatted
+                #hospitals.printLocations()
                 
                 break
 
